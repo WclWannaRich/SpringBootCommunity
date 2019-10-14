@@ -56,9 +56,6 @@ public class GithubProvider {
             String string = response.body().string();
             System.out.println(string);
             GithubUser githubUserDTO = JSON.parseObject(string, GithubUser.class);
-            System.out.println(githubUserDTO.getName());
-            System.out.println(githubUserDTO.getBio());
-            System.out.println(githubUserDTO.getId());
             return githubUserDTO;
         } catch (IOException e) {
             e.printStackTrace();
