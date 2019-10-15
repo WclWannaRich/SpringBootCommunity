@@ -1,6 +1,5 @@
 package com.wclspringboot.community.community.mapper;
 
-import com.wclspringboot.community.community.dto.QuestionDTO;
 import com.wclspringboot.community.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

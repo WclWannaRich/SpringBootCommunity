@@ -59,7 +59,7 @@
                 发帖广场
             </h2>
             <hr>
-            <div class="media" th:each="question : ${questions}">
+            <div class="media" th:each="question:${questions.list}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded"
@@ -76,6 +76,23 @@
                     </span>
                 </div>
             </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="page : ${questions.pages}">
+                        <span th:text="${page}" href="#"></span>
+                    </li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h2>

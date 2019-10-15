@@ -10,22 +10,21 @@
  */
 package com.wclspringboot.community.community.controller;
 
-import com.sun.deploy.net.cookie.CookieUnavailableException;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wclspringboot.community.community.dto.QuestionDTO;
 import com.wclspringboot.community.community.mapper.UserMapper;
 import com.wclspringboot.community.community.model.Question;
 import com.wclspringboot.community.community.model.User;
 import com.wclspringboot.community.community.service.QuestionService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +45,13 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request,
-                        Model model){
+                        Model model,
+                        @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
+        List<Question> list = questionService.list();
+        PageInfo<Question> pageInfo = new PageInfo<>(list);
+        model.addAttribute("questions",pageInfo);
+
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
            if(cookie.getName().equals("token")){
@@ -58,9 +63,8 @@ public class IndexController {
                break;
            }
         }
-        List<QuestionDTO> questionlist = questionService.list();
-        model.addAttribute("questions",questionlist);
         return "index";
+
     }
 
 

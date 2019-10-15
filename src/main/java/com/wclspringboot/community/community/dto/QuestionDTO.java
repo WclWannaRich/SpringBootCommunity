@@ -33,6 +33,14 @@ public class QuestionDTO {
     private String tag;
     private User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -53,8 +61,8 @@ public class QuestionDTO {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String desc) {
+        this.description = desc;
     }
 
     public Long getGmtCreate() {
@@ -111,13 +119,5 @@ public class QuestionDTO {
 
     public void setTag(String tag) {
         this.tag = tag;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
