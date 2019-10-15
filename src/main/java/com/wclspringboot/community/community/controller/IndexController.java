@@ -47,7 +47,7 @@ public class IndexController {
     public String index(HttpServletRequest request,
                         Model model,
                         @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,4);
+        PageHelper.startPage(pageNum,2);
         List<Question> list = questionService.list();
         PageInfo<Question> pageInfo = new PageInfo<>(list);
         model.addAttribute("questions",pageInfo);
