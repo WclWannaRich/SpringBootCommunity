@@ -11,14 +11,17 @@
 package com.wclspringboot.community.community.controller;
 
 import com.sun.jmx.snmp.SnmpUnknownModelLcdException;
+import com.wclspringboot.community.community.dto.QuestionDTO;
 import com.wclspringboot.community.community.mapper.QuestionMapper;
 import com.wclspringboot.community.community.mapper.UserMapper;
 import com.wclspringboot.community.community.model.Question;
 import com.wclspringboot.community.community.model.User;
+import com.wclspringboot.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,11 +39,21 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PublishController {
 
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionService questionService;
+
+    @GetMapping("/questionEdit/{id}")
+    public String questionEdit(@PathVariable(name = "id") Integer id,
+                               Model model){
+        QuestionDTO question = questionService.getQuestion(id);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("description",question.getDescription());
+        model.addAttribute("tag",question.getTag());
+        model.addAttribute("id",id);
+        return "publish";
+    }
+
 
     @GetMapping("/publish")
     public String publish(){
@@ -51,6 +64,7 @@ public class PublishController {
     public String doPublish(@RequestParam(value = "title", required=false) String title,
                             @RequestParam(value = "description", required=false) String description,
                             @RequestParam(value = "tag", required = false) String tag,
+                            @RequestParam(value = "id", required = false) Integer id,
                             HttpServletRequest request,
                             Model model){
 
@@ -69,32 +83,21 @@ public class PublishController {
         if(tag == null && tag =="" ){
             model.addAttribute("error","标签不可以为空");
         }
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if(cookie.getName().equals("token")){
-                String value = cookie.getValue();
-                user = userMapper.findByToken(value);
-                if (user!= null){
-                    request.getSession().setAttribute("user",user);
-                }
-                break;
-            }
-        }
 
+        User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             model.addAttribute("error","用户未登录");
             return "publish";
         }
         Question question = new Question();
+        question.setId(id);
+        question.setCreator(user.getId());
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
-        question.setCreator(user.getId());
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(Long.valueOf(question.getCreator()));
-        questionMapper.create(question);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
+
 }
 

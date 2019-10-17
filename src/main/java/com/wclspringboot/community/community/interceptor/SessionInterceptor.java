@@ -1,0 +1,63 @@
+/**
+ * Copyright (C), 2015-2019, XXX有限公司
+ * FileName: SessionInterceptor
+ * Author:   Administrator
+ * Date:     19-10-16, 0016 下午 07:21
+ * Description:
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * 作者姓名           修改时间           版本号              描述
+ */
+package com.wclspringboot.community.community.interceptor;
+
+import com.wclspringboot.community.community.mapper.UserMapper;
+import com.wclspringboot.community.community.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * 〈一句话功能简述〉<br> 
+ * 〈〉
+ *
+ * @author Administrator
+ * @create 19-10-16, 0016
+ * @since 1.0.0
+ */
+@Service
+public class SessionInterceptor implements HandlerInterceptor {
+    @Autowired
+    private UserMapper userMapper;
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null && cookies.length !=0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    String value = cookie.getValue();
+                    User byToken = userMapper.findByToken(value);
+                    if (byToken != null) {
+                        request.getSession().setAttribute("user", byToken);
+                    }
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+    }
+}

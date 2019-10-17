@@ -17,6 +17,7 @@ import com.wclspringboot.community.community.model.Question;
 import com.wclspringboot.community.community.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,5 +57,24 @@ public class QuestionService {
         return questionList;
     }
 
+    public QuestionDTO getQuestion(Integer id){
+        Question question = questionMapper.getQuestion(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        User user = userMapper.findById(question.getCreator());
+        BeanUtils.copyProperties(question,questionDTO);
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
 
+
+    public void createOrUpdate(Question question) {
+        if(question.getId() == null){
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(Long.valueOf(question.getCreator()));
+            questionMapper.create(question);
+        }else {
+            question.setGmtModified(Long.valueOf(question.getCreator()));
+            questionMapper.update(question);
+        }
+    }
 }
