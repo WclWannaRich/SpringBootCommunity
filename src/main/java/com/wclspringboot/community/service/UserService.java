@@ -8,12 +8,15 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package com.wclspringboot.community.community.service;
+package com.wclspringboot.community.service;
 
-import com.wclspringboot.community.community.mapper.UserMapper;
-import com.wclspringboot.community.community.model.User;
+import com.wclspringboot.community.mapper.UserMapper;
+import com.wclspringboot.community.model.User;
+import com.wclspringboot.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -25,21 +28,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService {
-    @Autowired
-    private UserMapper userMapper;
+   @Autowired
+   private UserMapper userMapper;
 
     public void createOrInsert(User user){
-        User userByAccountId = userMapper.findByAccountId(user.getAccountId());
-        if(userByAccountId == null){
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountIdEqualTo(user.getAccountId());
+        List<User> users = userMapper.selectByExample(userExample);
+        if(users.size() == 0){
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
         }else {
-            userByAccountId.setGmtModified(System.currentTimeMillis());
-            userByAccountId.setAccountId(user.getAccountId());
-            userByAccountId.setName(user.getName());
-            userByAccountId.setToken(user.getToken());
-            userMapper.update(userByAccountId);
+            user.setGmtModified(System.currentTimeMillis());
+            user.setAccountId(user.getAccountId());
+            user.setName(user.getName());
+            user.setToken(user.getToken());
+            userMapper.updateByPrimaryKey(user);
         }
     }
 }

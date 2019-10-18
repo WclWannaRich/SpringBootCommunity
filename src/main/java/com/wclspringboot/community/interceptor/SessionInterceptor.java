@@ -8,10 +8,11 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package com.wclspringboot.community.community.interceptor;
+package com.wclspringboot.community.interceptor;
 
-import com.wclspringboot.community.community.mapper.UserMapper;
-import com.wclspringboot.community.community.model.User;
+import com.wclspringboot.community.mapper.UserMapper;
+import com.wclspringboot.community.model.User;
+import com.wclspringboot.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -40,7 +42,10 @@ public class SessionInterceptor implements HandlerInterceptor {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String value = cookie.getValue();
-                    User byToken = userMapper.findByToken(value);
+                    UserExample example = new UserExample();
+                    example.createCriteria().andTokenEqualTo(value);
+                    List<User> users = userMapper.selectByExample(example);
+                    User byToken = users.get(0);
                     if (byToken != null) {
                         request.getSession().setAttribute("user", byToken);
                     }

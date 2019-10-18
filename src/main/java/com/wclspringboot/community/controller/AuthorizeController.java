@@ -8,27 +8,22 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package com.wclspringboot.community.community.controller;
+package com.wclspringboot.community.controller;
 
-import com.wclspringboot.community.community.dto.AccessTokenDTO;
-import com.wclspringboot.community.community.dto.GithubUser;
-import com.wclspringboot.community.community.mapper.UserMapper;
-import com.wclspringboot.community.community.model.User;
-import com.wclspringboot.community.community.provider.GithubProvider;
-import com.wclspringboot.community.community.service.UserService;
-import io.netty.handler.ssl.PemPrivateKey;
+import com.wclspringboot.community.dto.AccessTokenDTO;
+import com.wclspringboot.community.dto.GithubUser;
+import com.wclspringboot.community.model.User;
+import com.wclspringboot.community.provider.GithubProvider;
+import com.wclspringboot.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.Soundbank;
-import javax.swing.*;
 import java.util.UUID;
 
 /**
@@ -42,8 +37,8 @@ import java.util.UUID;
 @Controller
 public class AuthorizeController {
 
-    @Autowired
-    private UserService userService;
+   @Autowired
+   private UserService userService;
 
    @Autowired
    private GithubProvider githubProvider;

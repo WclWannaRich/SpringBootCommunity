@@ -1,9 +1,9 @@
-package com.wclspringboot.community.community.provider;
+package com.wclspringboot.community.provider;
 
 import java.io.IOException;
 
-import com.wclspringboot.community.community.dto.AccessTokenDTO;
-import com.wclspringboot.community.community.dto.GithubUser;
+import com.wclspringboot.community.dto.AccessTokenDTO;
+import com.wclspringboot.community.dto.GithubUser;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;

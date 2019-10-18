@@ -8,18 +8,15 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package com.wclspringboot.community.community.controller;
+package com.wclspringboot.community.controller;
 
-import com.wclspringboot.community.community.dto.QuestionDTO;
-import com.wclspringboot.community.community.service.QuestionService;
+import com.wclspringboot.community.dto.QuestionDTO;
+import com.wclspringboot.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 〈一句话功能简述〉<br> 

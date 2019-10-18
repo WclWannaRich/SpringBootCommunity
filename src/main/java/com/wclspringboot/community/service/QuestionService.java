@@ -8,19 +8,18 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package com.wclspringboot.community.community.service;
+package com.wclspringboot.community.service;
 
-import com.wclspringboot.community.community.dto.QuestionDTO;
-import com.wclspringboot.community.community.mapper.QuestionMapper;
-import com.wclspringboot.community.community.mapper.UserMapper;
-import com.wclspringboot.community.community.model.Question;
-import com.wclspringboot.community.community.model.User;
+import com.wclspringboot.community.dto.QuestionDTO;
+import com.wclspringboot.community.mapper.QuestionMapper;
+import com.wclspringboot.community.mapper.UserMapper;
+import com.wclspringboot.community.model.Question;
+import com.wclspringboot.community.model.QuestionExample;
+import com.wclspringboot.community.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,9 +39,11 @@ public class QuestionService {
     private QuestionMapper questionMapper;
 
     public List<Question> list(){
-        List<Question> questionList = questionMapper.list();
-        for (Question question : questionList) {
-            User user = userMapper.findById(question.getCreator());
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("id desc");
+        List<Question> questions = questionMapper.selectByExample(example);
+        for (Question question : questions) {
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             question.setUser(user);
         }
 //        List<QuestionDTO> questionDTOList  = new ArrayList<>();
@@ -54,13 +55,13 @@ public class QuestionService {
 //            questionDTOList.add(questionDTO);
 //        }
 //        return questionDTOList;
-        return questionList;
+        return questions;
     }
 
     public QuestionDTO getQuestion(Integer id){
-        Question question = questionMapper.getQuestion(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
-        User user = userMapper.findById(question.getCreator());
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
         BeanUtils.copyProperties(question,questionDTO);
         questionDTO.setUser(user);
         return questionDTO;
@@ -71,10 +72,10 @@ public class QuestionService {
         if(question.getId() == null){
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(Long.valueOf(question.getCreator()));
-            questionMapper.create(question);
+            questionMapper.insert(question);
         }else {
             question.setGmtModified(Long.valueOf(question.getCreator()));
-            questionMapper.update(question);
+            questionMapper.selectByPrimaryKey(question.getCreator());
         }
     }
 }

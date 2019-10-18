@@ -8,9 +8,9 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package com.wclspringboot.community.community.dto;
+package com.wclspringboot.community.dto;
 
-import com.wclspringboot.community.community.model.User;
+import com.wclspringboot.community.model.User;
 
 /**
  * 〈一句话功能简述〉<br> 

@@ -8,20 +8,19 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package com.wclspringboot.community.community.controller;
+package com.wclspringboot.community.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wclspringboot.community.community.mapper.UserMapper;
-import com.wclspringboot.community.community.model.Question;
-import com.wclspringboot.community.community.model.User;
-import com.wclspringboot.community.community.service.QuestionService;
+import com.wclspringboot.community.mapper.UserMapper;
+import com.wclspringboot.community.model.Question;
+import com.wclspringboot.community.model.User;
+import com.wclspringboot.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
