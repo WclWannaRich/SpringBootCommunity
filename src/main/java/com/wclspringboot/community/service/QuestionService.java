@@ -58,7 +58,7 @@ public class QuestionService {
         return questions;
     }
 
-    public QuestionDTO getQuestion(Integer id){
+    public QuestionDTO getQuestion(Long id){
         Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
         User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -72,10 +72,24 @@ public class QuestionService {
         if(question.getId() == null){
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(Long.valueOf(question.getCreator()));
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            question.setLikeCount(0);
             questionMapper.insert(question);
         }else {
-            question.setGmtModified(Long.valueOf(question.getCreator()));
-            questionMapper.selectByPrimaryKey(question.getCreator());
+           Question updateQuestion = new Question();
+           updateQuestion.setGmtModified(System.currentTimeMillis());
+           updateQuestion.setTitle(question.getTitle());
+           updateQuestion.setDescription(question.getDescription());
+           updateQuestion.setTag(question.getTag());
+           questionMapper.updateByPrimaryKey(updateQuestion);
         }
+    }
+
+    public void incView(Long id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionMapper.incView(question);
     }
 }

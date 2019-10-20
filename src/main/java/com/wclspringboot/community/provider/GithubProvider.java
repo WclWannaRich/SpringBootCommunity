@@ -54,7 +54,6 @@ public class GithubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
-            System.out.println(string);
             GithubUser githubUserDTO = JSON.parseObject(string, GithubUser.class);
             return githubUserDTO;
         } catch (IOException e) {

@@ -21,12 +21,12 @@ import com.wclspringboot.community.model.User;
  * @since 1.0.0
  */
 public class QuestionDTO {
-    private Integer id;
+    private Long id;
     private String title;
     private String description;
     private Long gmtCreate;
     private Long gmtModified;
-    private Integer creator;
+    private Long creator;
     private Integer commentCount;
     private Integer viewCount;
     private Integer likeCount;
@@ -41,12 +41,20 @@ public class QuestionDTO {
         this.user = user;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Long creator) {
+        this.creator = creator;
     }
 
     public String getTitle() {
@@ -81,13 +89,7 @@ public class QuestionDTO {
         this.gmtModified = gmtModified;
     }
 
-    public Integer getCreator() {
-        return creator;
-    }
 
-    public void setCreator(Integer creator) {
-        this.creator = creator;
-    }
 
     public Integer getCommentCount() {
         return commentCount;

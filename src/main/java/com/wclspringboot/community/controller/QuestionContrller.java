@@ -34,9 +34,10 @@ public class QuestionContrller {
 
 
     @GetMapping("/question/{id}")
-    public String getQuestion(@PathVariable(name = "id") Integer id,
+    public String getQuestion(@PathVariable(name = "id") Long id,
                               Model model){
         QuestionDTO questionDTO = questionService.getQuestion(id);
+        questionService.incView(id);
         model.addAttribute("question",questionDTO);
         return "question";
     }
