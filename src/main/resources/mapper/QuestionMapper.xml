@@ -391,7 +391,7 @@
   <update id="incCommentCount" parameterType="com.wclspringboot.community.model.Question">
     update question
     set
-    comment_count = comment_count + #{commentCcount,jdbcType=INTEGER}
+    comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
     where id =  #{id}
   </update>
 

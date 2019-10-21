@@ -2,7 +2,7 @@
  * Copyright (C), 2015-2019, XXX有限公司
  * FileName: CommentDTO
  * Author:   Administrator
- * Date:     19-10-19, 0019 上午 10:06
+ * Date:     19-10-21, 0021 上午 11:01
  * Description:
  * History:
  * <author>          <time>          <version>          <desc>
@@ -10,18 +10,34 @@
  */
 package com.wclspringboot.community.dto;
 
+import com.wclspringboot.community.model.User;
+
 /**
  * 〈一句话功能简述〉<br> 
  * 〈〉
  *
  * @author Administrator
- * @create 19-10-19, 0019
+ * @create 19-10-21, 0021
  * @since 1.0.0
  */
 public class CommentDTO {
+    private Long id;
     private Long parentId;
-    private String content;
     private Integer type;
+    private Long commentator;
+    private Long gmtCreate;
+    private Long gmtModified;
+    private Long likeCount;
+    private String content;
+    private User user;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getParentId() {
         return parentId;
@@ -29,6 +45,46 @@ public class CommentDTO {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Long getCommentator() {
+        return commentator;
+    }
+
+    public void setCommentator(Long commentator) {
+        this.commentator = commentator;
+    }
+
+    public Long getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Long getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Long gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public Long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Long likeCount) {
+        this.likeCount = likeCount;
     }
 
     public String getContent() {
@@ -39,11 +95,11 @@ public class CommentDTO {
         this.content = content;
     }
 
-    public Integer getType() {
-        return type;
+    public User getUser() {
+        return user;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

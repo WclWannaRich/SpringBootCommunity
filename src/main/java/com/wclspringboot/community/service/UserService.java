@@ -40,11 +40,12 @@ public class UserService {
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
         }else {
-            user.setGmtModified(System.currentTimeMillis());
-            user.setAccountId(user.getAccountId());
-            user.setName(user.getName());
-            user.setToken(user.getToken());
-            userMapper.updateByPrimaryKey(user);
+            User userupdate = users.get(0);
+            userupdate.setGmtModified(System.currentTimeMillis());
+            userupdate.setAccountId(user.getAccountId());
+            userupdate.setName(user.getName());
+            userupdate.setToken(user.getToken());
+            userMapper.updateByPrimaryKey(userupdate);
         }
     }
 }
