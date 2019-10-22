@@ -106,4 +106,6 @@ public interface QuestionMapper {
     void incView(Question question);
 
     void incCommentCount(Question question);
+
+    List<Question> selectRelated(Question question);
 }

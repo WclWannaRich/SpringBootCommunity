@@ -12,6 +12,7 @@ package com.wclspringboot.community.controller;
 
 import com.wclspringboot.community.dto.CommentDTO;
 import com.wclspringboot.community.dto.QuestionDTO;
+import com.wclspringboot.community.enums.CommentTypeEnum;
 import com.wclspringboot.community.model.Comment;
 import com.wclspringboot.community.service.CommentService;
 import com.wclspringboot.community.service.QuestionService;
@@ -44,10 +45,12 @@ public class QuestionContrller {
     public String getQuestion(@PathVariable(name = "id") Long id,
                               Model model){
         QuestionDTO questionDTO = questionService.getQuestion(id);
-        List<CommentDTO> list = commentService.listByQuestionId(id);
+        List<QuestionDTO> questionDTOS = questionService.selectRelated(questionDTO);
+        List<CommentDTO> list = commentService.listByQuestionId(id, CommentTypeEnum.QUESTION);
         questionService.incView(id);
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",list);
+        model.addAttribute("relatedQuestion",questionDTOS);
         return "question";
     }
 

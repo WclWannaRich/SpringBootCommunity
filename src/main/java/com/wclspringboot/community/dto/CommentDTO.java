@@ -23,6 +23,7 @@ import com.wclspringboot.community.model.User;
 public class CommentDTO {
     private Long id;
     private Long parentId;
+    private Integer commentCount;
     private Integer type;
     private Long commentator;
     private Long gmtCreate;
@@ -30,6 +31,14 @@ public class CommentDTO {
     private Long likeCount;
     private String content;
     private User user;
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
 
     public Long getId() {
         return id;

@@ -363,6 +363,9 @@
       tag = #{tag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectRelated" parameterType="com.wclspringboot.community.model.Question" resultMap="BaseResultMap">
+        select * from question where id != #{id} and tag regexp #{tag}
+  </select>
   <select id="selectByExampleWithRowbounds" parameterType="com.wclspringboot.community.model.QuestionExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbggenerated

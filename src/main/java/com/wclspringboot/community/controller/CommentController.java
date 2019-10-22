@@ -11,7 +11,9 @@
 package com.wclspringboot.community.controller;
 
 import com.wclspringboot.community.dto.CommentCreateDTO;
+import com.wclspringboot.community.dto.CommentDTO;
 import com.wclspringboot.community.dto.ResultDTO;
+import com.wclspringboot.community.enums.CommentTypeEnum;
 import com.wclspringboot.community.exception.CustomizeErrorCode;
 import com.wclspringboot.community.model.Comment;
 import com.wclspringboot.community.model.User;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -58,5 +61,12 @@ public class CommentController {
         comment.setLikeCount(0);
         commentService.insert(comment);
         return ResultDTO.okOf();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Long id){
+        List<CommentDTO> commentDTOS = commentService.listByQuestionId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okOf(commentDTOS);
     }
 }
